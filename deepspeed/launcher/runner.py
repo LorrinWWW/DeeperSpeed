@@ -18,7 +18,7 @@ from copy import deepcopy
 import signal
 import time
 
-from .multinode_runner import PDSHRunner, OpenMPIRunner, MVAPICHRunner, SlurmRunner, MPICHRunner, JSRunner
+from .multinode_runner import PDSHRunner, OpenMPIRunner, MVAPICHRunner, SlurmRunner, MPICHRunner, JSRunner, DummyRunner
 from .constants import PDSH_LAUNCHER, OPENMPI_LAUNCHER, MVAPICH_LAUNCHER, SLURM_LAUNCHER, MPICH_LAUNCHER, JSRUN_LAUNCHER
 from ..constants import TORCH_DISTRIBUTED_DEFAULT_PORT
 from ..nebula.constants import NEBULA_EXPORT_ENVS
@@ -527,7 +527,8 @@ def main(args=None):
         elif args.launcher == SLURM_LAUNCHER:
             runner = SlurmRunner(args, world_info_base64, resource_pool)
         else:
-            raise NotImplementedError(f"Unknown launcher {args.launcher}")
+            runner = DummyRunner(args, world_info_base64, resource_pool)
+#             raise NotImplementedError(f"Unknown launcher {args.launcher}")
 
         if not runner.backend_exists():
             raise RuntimeError(f"launcher '{args.launcher}' not installed.")
