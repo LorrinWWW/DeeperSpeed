@@ -111,7 +111,8 @@ def parse_args(args=None):
 
     parser.add_argument(
         "--launcher",
-        default=PDSH_LAUNCHER,
+#         default=PDSH_LAUNCHER,
+        default="dummy",
         type=str,
         help="(optional) choose launcher backend for multi-node "
         "training. Options currently include PDSH, OpenMPI, MVAPICH, SLURM, MPICH.")
