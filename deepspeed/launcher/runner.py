@@ -486,7 +486,6 @@ def main(args=None):
     world_info_base64 = encode_world_info(active_resources)
 
     multi_node_exec = args.force_multi or len(active_resources) > 1
-    multi_node_exec = False # TODO.............jue
 
     if not multi_node_exec:
         deepspeed_launch = [
