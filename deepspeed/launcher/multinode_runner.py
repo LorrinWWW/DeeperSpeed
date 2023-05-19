@@ -440,3 +440,23 @@ class MVAPICHRunner(MultiNodeRunner):
 
         return mpirun_cmd + export_cmd + python_exec + [self.user_script
                                                         ] + self.user_arguments
+
+    
+class DummyRunner(MultiNodeRunner):
+    def __init__(self, args, world_info_base64):
+        super().__init__(args, world_info_base64)
+
+    def backend_exists(self):
+        return True
+
+    @property
+    def name(self):
+        return "dummy"
+
+    def parse_user_args(self):
+        return list(
+            map(lambda x: x if x.startswith("-") else f"'{x}'",
+                self.args.user_args))
+
+    def get_cmd(self, environment, active_resources):
+        return ['echo', 'dummy']
